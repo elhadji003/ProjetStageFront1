@@ -14,7 +14,6 @@ import {
   SeeAllButtons,
   TheBtns,
   TIcons,
-  ImageHotel,
   ModalDetails,
   ModalMere,
   ModalTitle,
@@ -45,6 +44,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Image from "next/image";
 
 const Hotel = () => {
   const [hotels, setHotels] = useState([]);
@@ -62,7 +62,7 @@ const Hotel = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/hotels");
+      const response = await axios.get("https://projetstage1backend.onrender.com/api/hotels");
       setHotels(response.data);
       setNombre(response.data.length);
     } catch (error) {
@@ -73,7 +73,7 @@ const Hotel = () => {
 
   const fetchData2 = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/uploads/updImage");
+      const response = await axios.get("https://projetstage1backend.onrender.com/uploads/updImage");
       setHotelsImg(response.data);
     } catch (error) {
       console.error('Erreur lors de la récupération des données img:', error);
@@ -88,7 +88,7 @@ const Hotel = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/hotels/${id}`);
+      await axios.delete(`https://projetstage1backend.onrender.com/api/hotels/${id}`);
       setHotels(hotels.filter(hotel => hotel._id !== id));
     } catch (error) {
       setError('Erreur lors de la suppression de l\'hôtel.');
@@ -181,11 +181,14 @@ const Hotel = () => {
                     </SeeAllButtons>
                   )}
                 </TheBtns>
-                {hotelsImg.map((img) => (
+
+                  <img src={hotel.image} alt={hotel.filename} width={300} height={200}/>
+
+                {/* {hotelsImg.map((img) => (
                   <div key={img._id}>
                     <img src={img.filename} alt={img.filename} width={300} height={200}/>
                   </div>
-                ))}
+                ))} */}
               </ImageModalMere>
               <CardInfo>
                 <Continent>

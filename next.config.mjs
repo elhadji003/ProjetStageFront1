@@ -6,7 +6,13 @@ const nextConfig = {
         NEXTAUTH_SECRET: "elhadjimalickdiop170503linguere",
         NEXTAUTH_URL: "http://localhost:3000",
         SECRET: "RONDOM_STRING",
-    }
+    },
+    reactStrictMode: true,
+    images: {
+        domains: ['localhost'],
+    },
+    
+
 };
 
 

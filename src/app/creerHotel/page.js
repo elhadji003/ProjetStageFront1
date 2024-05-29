@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import axios from 'axios'; // Assurez-vous que axios est importé
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import vector from '../assets/Vector.png';
+import { faArrowLeft, faImage } from '@fortawesome/free-solid-svg-icons';
 import {
   Container,
   Card,
@@ -21,8 +21,8 @@ import {
   StyledFrInput,
   StyledSubmitCreer,
   FlexEnd,
-  SpanAjouterPhoto,
   Form,
+  DivImage2,
 } from '../../styles/Creer.Style';
 import { ButtonModal } from '../../styles/Navbar2.Style';
 import { ErrorMessage, SuccessMessage } from '../../styles/Connexion.Style';
@@ -31,78 +31,85 @@ const CreerHotel = () => {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
-  const [image, setImage] = useState(null);
-  const [values, setValues] = useState({
+
+  const [formData, setFormData] = useState({
     nameHotel: '',
     address: '',
     email: '',
     price: '',
     number: '',
     devise: '',
-    imgName: '',
+    image: null,
   });
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSeletedImage(file);
+    setFormData({
+      ...formData,
+      image: file,
+    });
+  };
 
   const resetMessage = () => {
     setMessage("");
     setIsError(false);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-  };
-
-  const handleFileChange = (e) => {
-    setImage(e.target.files[0]);
-  };
+  const [selectedImage, setSeletedImage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    const formDataToSend = new FormData();
+    for (let key in formData) {
+      formDataToSend.append(key, formData[key]);
+    }
+
     try {
-      const res = await fetch("http://localhost:8000/api/hotels", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nameHotel: values.nameHotel,
-          address: values.address,
-          email: values.email,
-          price: values.price,
-          number: values.number,
-          devise: values.devise,
-        }),
-      });
-  
-      const data = await res.json();
-  
-      if (res.ok) {
-        setValues({
+      console.log("Form Data to Send:", formDataToSend); // Affiche les données envoyées
+
+      const res = await axios.post(
+        "http://localhost:8000/api/hotels",
+        formDataToSend
+      );
+
+      console.log("Response Data:", res.data); // Affiche les données renvoyées par le backend
+
+      if (res.status === 200) {
+        setFormData({
           nameHotel: "",
           address: "",
           email: "",
           price: "",
           number: "",
           devise: "",
+          image: null
         });
-        setImage(null);
+
+        setSeletedImage(null);
         setMessage("Hotel created successfully!");
         setTimeout(resetMessage, 5000);
         router.push('/cardHotel');
       } else {
         setIsError(true);
-        setMessage(data.message || "Registration failed. Please try again.");
+        setMessage(res.data.message || "Registration failed. Please try again.");
         setTimeout(resetMessage, 5000);
       }
     } catch (error) {
+      console.error("Error submitting form:", error); // Affiche l'erreur en cas d'échec de la soumission du formulaire
       setIsError(true);
       setMessage("An error occurred. Please try again.");
       setTimeout(resetMessage, 5000);
     }
   };
-  
 
   return (
     <Container>
@@ -125,7 +132,7 @@ const CreerHotel = () => {
                   type="text"
                   name="nameHotel"
                   placeholder="CAP Marniane"
-                  value={values.nameHotel}
+                  value={formData.nameHotel}
                   onChange={handleChange}
                 />
               </StyledFrInput>
@@ -136,7 +143,7 @@ const CreerHotel = () => {
                   type="email"
                   name="email"
                   placeholder="Email"
-                  value={values.email}
+                  value={formData.email}
                   onChange={handleChange}
                 />
               </StyledFrInput>
@@ -147,7 +154,7 @@ const CreerHotel = () => {
                   type="text"
                   name="price"
                   placeholder="125.000 XOF"
-                  value={values.price}
+                  value={formData.price}
                   onChange={handleChange}
                 />
               </StyledFrInput>
@@ -160,7 +167,7 @@ const CreerHotel = () => {
                   type="text"
                   name="address"
                   placeholder="Les îles de ..."
-                  value={values.address}
+                  value={formData.address}
                   onChange={handleChange}
                 />
               </StyledFrInput>
@@ -171,7 +178,7 @@ const CreerHotel = () => {
                   type="text"
                   name="number"
                   placeholder="+221 ..."
-                  value={values.number}
+                  value={formData.number}
                   onChange={handleChange}
                 />
               </StyledFrInput>
@@ -180,7 +187,7 @@ const CreerHotel = () => {
                 <Select
                   id="currency"
                   name="devise"
-                  value={values.devise}
+                  value={formData.devise}
                   onChange={handleChange}
                 >
                   <option value="XOF">F XOF</option>
@@ -193,8 +200,17 @@ const CreerHotel = () => {
           <Footer>
             <Label htmlFor="file">Ajouter une photo</Label>
             <Dropzone htmlFor="dropzone-file">
-              <Image src={vector} alt="Vector" />
-              <SpanAjouterPhoto>Ajouter une photo</SpanAjouterPhoto>
+              {selectedImage
+                ? <Image
+                    src={URL.createObjectURL(selectedImage)}
+                    alt="selected-img"
+                    width={300}
+                    height={200}
+                  />
+                : <DivImage2>
+                    <FontAwesomeIcon icon={faImage} size='3x' />
+                  </DivImage2>
+              }
               <Input
                 id="dropzone-file"
                 type="file"

@@ -22,7 +22,7 @@ const Hotel = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/hotels");
+      const response = await axios.get("https://projetstage1backend.onrender.com/api/hotels");
       setHotels(response.data);
       setNombre(response.data.length);
     } catch (error) {
@@ -41,7 +41,7 @@ const Hotel = () => {
       formData.append("image", newHotelImage);
 
       // Envoyer une requête POST pour créer un nouvel hôtel avec une image
-      await axios.post("http://localhost:8000/api/creerHotel", formData, {
+      await axios.post("https://projetstage1backend.onrender.com/api/creerHotel", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
