@@ -92,7 +92,7 @@ const EditHotel = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/api/hotels/${hotelId}`, {
+      const res = await fetch(`https://projetstage1backend.onrender.com/api/hotels/${hotelId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
