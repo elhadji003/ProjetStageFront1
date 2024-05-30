@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight, faHome } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faHome, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import Image from 'next/image';
 import iconRed from "../../app/assets/icon.png";
@@ -72,6 +72,12 @@ const Sidebar = () => {
                                 <OnligneFlex><Onligne></Onligne> en ligne</OnligneFlex>
                             </ProfileTextBas>
                         </ProfileBas>
+
+                        <SignOut onClick={handleSignOut}>
+                            <IconButton>
+                                <FontAwesomeIcon icon={faRightToBracket} color="white" size='2x'/>
+                            </IconButton>
+                        </SignOut>
 
                         </ProfileBasMere>
 

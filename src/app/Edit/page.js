@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from '../../pages/sidebar/Sidebar';
-import EditHotel from '../editHotel/page';
+import EditHotel from '../editHotel/EditHotel';
 import Navbar from '../../pages/navbar/Navbar';
 
 export default function CardHotel() {

@@ -187,6 +187,11 @@ export const ProfileBas = styled.div`
 export const ProfileBasMere = styled.div`
   position: relative;
   top: 260px;
+
+  @media (min-width: 1024px) {
+    top: 130px;
+
+  }
 `
 
 export const ProfileTextBas = styled.div`

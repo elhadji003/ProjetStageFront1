@@ -26,10 +26,19 @@ import {
   Header_Span,
   IconButton
 } from '../../styles/Navabar.Style';
-import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 
 const Navbar = () => {
+
+
+  const router = useRouter()
+
+  const handleSignOut = () => {
+    router.push("/")
+  }
+
+
   return (
     <NavbarContainer>
       <NavbarNav>
@@ -53,7 +62,7 @@ const Navbar = () => {
                 <ProfileAdminImage src={ProfileAdmin} alt='Profile Admin' width={40} height={40} />
               </ProfileImage>
               <LogoutIcon>
-                <IconButton onClick={() => signOut()}>
+                <IconButton onClick={handleSignOut}>
                   <FontAwesomeIcon icon={faRightToBracket} color="black"/>
                 </IconButton>
               </LogoutIcon>
