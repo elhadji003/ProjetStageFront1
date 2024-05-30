@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from '../../pages/sidebar/Sidebar';
 import Navbar from '../../pages/navbar/Navbar';
-import CreerHotel from '../creerHotels/creerHotel';
+import CreerHotel from '../../app/creerHotels/CreerHotel';
 
 export default function CardHotel() {
 
