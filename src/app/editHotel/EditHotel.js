@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter} from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
@@ -26,7 +26,7 @@ import { ErrorMessage, SuccessMessage } from '../../styles/Connexion.Style';
 
 const EditHotel = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useParams();
   const hotelId = searchParams.get('id');
 
   const [message, setMessage] = useState("");
