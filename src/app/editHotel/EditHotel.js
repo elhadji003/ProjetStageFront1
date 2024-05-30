@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useParams, useRouter} from 'next/navigation';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
@@ -24,9 +24,9 @@ import {
 import { ButtonModal } from '../../styles/Navbar2.Style';
 import { ErrorMessage, SuccessMessage } from '../../styles/Connexion.Style';
 
-const EditHotel = () => {
+const EditHotelComponent = () => {
   const router = useRouter();
-  const searchParams = useParams();
+  const searchParams = useSearchParams();
   const hotelId = searchParams.get('id');
 
   const [message, setMessage] = useState("");
@@ -52,16 +52,26 @@ const EditHotel = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchHotelData();
+  }, [hotelId]);
 
-  const fetchData = async () => {
+  const fetchHotelData = async () => {
     try {
-      const response = await axios.get("https://projetstage1backend.onrender.com/api/hotels");
-      setHotels(response.data);
-      setNombre(response.data.length);
+      const response = await axios.get(`https://projetstage1backend.onrender.com/api/hotels/${hotelId}`);
+      setFormData({
+        nameHotel: response.data.nameHotel,
+        address: response.data.address,
+        email: response.data.email,
+        price: response.data.price,
+        number: response.data.number,
+        devise: response.data.devise,
+      });
     } catch (error) {
       console.error('Erreur lors de la récupération des données:', error);
+      setIsError(true);
+      setMessage("Une erreur s'est produite lors de la récupération des données");
+      const id = setTimeout(resetMessage, 5000);
+      setTimeoutId(id);
     }
   };
 
@@ -192,7 +202,6 @@ const EditHotel = () => {
                   value={formData.devise}
                   onChange={handleChange}
                 >
-                  <option value="devise">money</option>
                   <option value="XOF">F XOF</option>
                   <option value="Euro">Euro</option>
                   <option value="$">$</option>
@@ -205,9 +214,16 @@ const EditHotel = () => {
           </FlexEnd>
         </Form>
         {message && (isError ? <ErrorMessage>{message}</ErrorMessage> : <SuccessMessage>{message}</SuccessMessage>)}
-        <ErrorMessage>Une erreure c'est produit lors de la recupereration des données</ErrorMessage>
       </Card>
     </Container>
+  );
+};
+
+const EditHotel = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <EditHotelComponent />
+    </Suspense>
   );
 };
 
