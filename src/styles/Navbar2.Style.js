@@ -224,7 +224,9 @@ export const Flex2ColumnContainer = styled.div`
   }
 `;
 
-export const StyleSpanCreer = styled.span`
+export const StyleSpanCreer = styled.button`
+  background: none;
+  border: none;
   font-size: 1rem;
   color: black;
 `

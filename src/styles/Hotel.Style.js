@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const HotelSection = styled.section`
 `;
 
+
 export const SecContent = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -147,7 +148,9 @@ export const TIcons = styled.button`
 export const SeeAllButtons = styled.div`
   display: flex;
   flex-direction: column;
-  // padding: 0.5rem;
+  background: #333;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
   // transition: .4s;
 `
 
@@ -200,7 +203,65 @@ export const ModalBtnClose = styled.button`
   padding: 0.2rem 1.5rem;
   border-radius: 1rem;
   margin: 1rem;
-  
+  background: #333;
+  color: white;
+  border: none;
+
+`
+export const ModalBtnEdit = styled.button`
+  background: none;
+  padding: 0.2rem 1.5rem;
+  border-radius: 1rem;
+  margin: 1rem;
+  background: yellow;
+  color: #333;
+  border: none;
+  font-weight: bold;
+  a{
+    text-decoration: none;
+    color: #333;
+  }
+`
+
+export const ModalForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ModalInput = styled.input`
+  margin: 8px 0;
+  padding: 8px;
+  font-size: 16px;
+`;
+
+export const ModalLabel = styled.label`
+  font-size: 16px;
+  margin: 4px 0;
+`;
+
+export const BtnPrev = styled.button`
+  background: skyblue;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.3rem;
+  color: #fff;
+ 
+`
+export const BtnNext = styled.button`
+  border: none;
+  background: skyblue;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.3rem;
+  color: #fff;
+
+`
+
+export const BtnPrevNext = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: end;
+  padding: 1rem;
   
 `
 

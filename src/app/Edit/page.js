@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from '../../pages/sidebar/Sidebar';
-import Hotel from '../../pages/hotel/Hotel';
-import Navbar2 from '../../pages/navbar2/Navbar2';
+import EditHotel from '../editHotel/page';
+import Navbar from '../../pages/navbar/Navbar';
 
 export default function CardHotel() {
 
@@ -15,8 +15,8 @@ export default function CardHotel() {
           <Sidebar />
         </div>
         <div className="col-12 col-md-12 col-lg-10">
-          <Navbar2/>
-          <Hotel />
+            <Navbar/>
+            <EditHotel/>
         </div>
       </div>
     </div>

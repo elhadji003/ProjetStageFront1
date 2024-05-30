@@ -215,3 +215,7 @@ export const SignOut = styled.button`
   border: none;
 
 `
+
+export const ProfileName = styled.span`
+  font-size: 12px;
+`

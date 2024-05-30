@@ -1,11 +1,10 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import axios from 'axios'; // Assurez-vous que axios est importé
-import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 import {
   Container,
   Card,
@@ -16,21 +15,24 @@ import {
   Label,
   Input,
   Select,
-  Footer,
-  Dropzone,
-  StyledFrInput,
-  StyledSubmitCreer,
   FlexEnd,
   Form,
-  DivImage2,
+  StyledFrInput,
+  StyledSubmitCreer,
+  Footer,
 } from '../../styles/Creer.Style';
 import { ButtonModal } from '../../styles/Navbar2.Style';
 import { ErrorMessage, SuccessMessage } from '../../styles/Connexion.Style';
 
-const CreerHotel = () => {
+const EditHotel = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const hotelId = searchParams.get('id');
+
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const [timeoutId, setTimeoutId] = useState(null);
+  const [hotels, setHotels] = useState([]);
 
   const [formData, setFormData] = useState({
     nameHotel: '',
@@ -39,88 +41,100 @@ const CreerHotel = () => {
     price: '',
     number: '',
     devise: '',
-    image: null,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setSeletedImage(file);
-    setFormData({
-      ...formData,
-      image: file,
-    });
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("https://projetstage1backend.onrender.com/api/hotels");
+      setHotels(response.data);
+      setNombre(response.data.length);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données:', error);
+    }
   };
 
   const resetMessage = () => {
     setMessage("");
     setIsError(false);
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      setTimeoutId(null);
+    }
   };
-
-  const [selectedImage, setSeletedImage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formDataToSend = new FormData();
-    for (let key in formData) {
-      formDataToSend.append(key, formData[key]);
+
+    if (
+      !formData.nameHotel ||
+      !formData.address ||
+      !formData.email ||
+      !formData.number ||
+      !formData.price
+    ) {
+      setIsError(true);
+      setMessage('Les champs ne doivent pas être vides.');
+      const id = setTimeout(resetMessage, 5000);
+      setTimeoutId(id);
+      return;
     }
 
     try {
-      console.log("Form Data to Send:", formDataToSend); // Affiche les données envoyées
+      const res = await fetch(`http://localhost:8000/api/hotels/${hotelId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-      const res = await axios.post(
-        "https://projetstage1backend.onrender.com/api/hotels",
-        formDataToSend
-      );
+      const result = await res.json();
 
-      console.log("Response Data:", res.data); // Affiche les données renvoyées par le backend
-
-      if (res.status === 200) {
-        setFormData({
-          nameHotel: "",
-          address: "",
-          email: "",
-          price: "",
-          number: "",
-          devise: "",
-          image: null
-        });
-
-        setSeletedImage(null);
-        setMessage("Hotel created successfully!");
-        setTimeout(resetMessage, 5000);
+      if (res.ok) {
+        setIsError(false);
+        setMessage("Hotel updated successfully!");
+        console.log('Update successful:', result);
+        const id = setTimeout(resetMessage, 5000);
+        setTimeoutId(id);
         router.push('/cardHotel');
       } else {
         setIsError(true);
-        setMessage(res.data.message || "Registration failed. Please try again.");
-        setTimeout(resetMessage, 5000);
+        setMessage(result.message || "Update failed. Please try again.");
+        console.log('Update failed:', result);
+        const id = setTimeout(resetMessage, 5000);
+        setTimeoutId(id);
       }
     } catch (error) {
-      console.error("Error submitting form:", error); // Affiche l'erreur en cas d'échec de la soumission du formulaire
+      console.error("Error updating form:", error);
       setIsError(true);
       setMessage("An error occurred. Please try again.");
-      setTimeout(resetMessage, 5000);
+      const id = setTimeout(resetMessage, 5000);
+      setTimeoutId(id);
     }
   };
 
   return (
     <Container>
-      <Card>
+      <Card className='my-4 border-top'>
         <Header>
           <a href="/cardHotel">
             <ButtonModal>
               <FontAwesomeIcon icon={faArrowLeft} />
             </ButtonModal>
           </a>
-          <Title>Créer un nouveau hôtel</Title>
+          <Title>Modifier l'hôtel</Title>
         </Header>
         <Form onSubmit={handleSubmit}>
           <Row>
@@ -128,10 +142,8 @@ const CreerHotel = () => {
               <StyledFrInput>
                 <Label htmlFor="hotel-name">Nom de l'hôtel</Label>
                 <Input
-                  id="hotel-name"
                   type="text"
                   name="nameHotel"
-                  placeholder="CAP Marniane"
                   value={formData.nameHotel}
                   onChange={handleChange}
                 />
@@ -139,10 +151,7 @@ const CreerHotel = () => {
               <StyledFrInput>
                 <Label htmlFor="email">Email</Label>
                 <Input
-                  id="email"
-                  type="email"
                   name="email"
-                  placeholder="Email"
                   value={formData.email}
                   onChange={handleChange}
                 />
@@ -150,10 +159,8 @@ const CreerHotel = () => {
               <StyledFrInput>
                 <Label htmlFor="price">Prix par nuit</Label>
                 <Input
-                  id="price"
                   type="text"
                   name="price"
-                  placeholder="125.000 XOF"
                   value={formData.price}
                   onChange={handleChange}
                 />
@@ -163,10 +170,8 @@ const CreerHotel = () => {
               <StyledFrInput>
                 <Label htmlFor="address">Adresse</Label>
                 <Input
-                  id="address"
                   type="text"
                   name="address"
-                  placeholder="Les îles de ..."
                   value={formData.address}
                   onChange={handleChange}
                 />
@@ -174,10 +179,8 @@ const CreerHotel = () => {
               <StyledFrInput>
                 <Label htmlFor="phone">Numéro de téléphone</Label>
                 <Input
-                  id="phone"
                   type="text"
                   name="number"
-                  placeholder="+221 ..."
                   value={formData.number}
                   onChange={handleChange}
                 />
@@ -185,48 +188,27 @@ const CreerHotel = () => {
               <StyledFrInput>
                 <Label htmlFor="currency">Devise</Label>
                 <Select
-                  id="currency"
                   name="devise"
                   value={formData.devise}
                   onChange={handleChange}
                 >
+                  <option value="devise">money</option>
                   <option value="XOF">F XOF</option>
                   <option value="Euro">Euro</option>
-                  <option value="Dollar">$</option>
+                  <option value="$">$</option>
                 </Select>
               </StyledFrInput>
             </FrGr2oup>
           </Row>
-          <Footer>
-            <Label htmlFor="file">Ajouter une photo</Label>
-            <Dropzone htmlFor="dropzone-file">
-              {selectedImage
-                ? <Image
-                    src={URL.createObjectURL(selectedImage)}
-                    alt="selected-img"
-                    width={300}
-                    height={200}
-                  />
-                : <DivImage2>
-                    <FontAwesomeIcon icon={faImage} size='3x' />
-                  </DivImage2>
-              }
-              <Input
-                id="dropzone-file"
-                type="file"
-                accept='images/*'
-                onChange={handleFileChange}
-              />
-            </Dropzone>
-          </Footer>
           <FlexEnd>
-            <StyledSubmitCreer type="submit">Enregistrer</StyledSubmitCreer>
+            <StyledSubmitCreer type="submit">Mettre à jour</StyledSubmitCreer>
           </FlexEnd>
         </Form>
         {message && (isError ? <ErrorMessage>{message}</ErrorMessage> : <SuccessMessage>{message}</SuccessMessage>)}
+        <ErrorMessage>Une erreure c'est produit lors de la recupereration des données</ErrorMessage>
       </Card>
     </Container>
   );
 };
 
-export default CreerHotel;
+export default EditHotel;
