@@ -21,7 +21,9 @@ export const Card = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 1rem;
-  margin-bottom: 1crem;
+  margin-bottom: 1rem;
+  opacity: 1;
+
 `;
 
 export const Header = styled.div`

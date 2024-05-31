@@ -42,7 +42,7 @@ export const SingleDestination = styled.div`
     width: auto;
   }
   @media screen and (min-width: 768px) {
-    width: 350px;
+    width: 300px;
   }
   @media screen and (min-width: 1024px) {
     width: 250px;
@@ -227,6 +227,7 @@ export const ModalBtnEdit = styled.button`
 export const ModalForm = styled.form`
   display: flex;
   flex-direction: column;
+  
 `;
 
 export const ModalInput = styled.input`
@@ -280,6 +281,23 @@ export const LeftRight = styled.div`
   @media screen and (min-width: 1024px) {
     flex-direction: row;
   }
-
-
   `
+
+export const MaDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+export const DivAuDessus = styled.div`
+  position: relative;  
+`
+export const DivEnDessous = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: -30rem;
+background-color: rgba(0, 0, 0, 0.5); /* Optionnel : pour un fond semi-transparent */
+z-index: 1000; /* Assurez-vous qu'il apparaît au-dessus du contenu */
+
+  
+  
+`

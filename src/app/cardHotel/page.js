@@ -15,7 +15,7 @@ export default function CardHotel() {
           <Sidebar />
         </div>
         <div className="col-12 col-md-12 col-lg-10">
-          <Navbar2/>
+          {/* <Navbar2/> */}
           <Hotel />
         </div>
       </div>

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import React, { useEffect, useState } from "react";
 import 'animate.css';
@@ -26,6 +26,9 @@ import {
   BtnNext,
   BtnPrevNext,
   LeftRight,
+  MaDiv,
+  DivAuDessus,
+  DivEnDessous,
 } from "../../styles/Hotel.Style";
 import { 
   Navbar2Container, 
@@ -41,12 +44,32 @@ import {
   StyleIconCreer,
   ButtonModal
 } from '../../styles/Navbar2.Style';
+import { 
+  NavbarContainer, 
+  NavbarNav, 
+  TitleContainer, 
+  Title, 
+  Toolbar, 
+  BellIcon, 
+  ProfileImage, 
+  LogoutIcon, 
+  ProfileAdminImage, 
+  DivNv1,
+  DivNav2,
+  FlexContainer,
+  SearchContainer,
+  SearchInput,
+  IconButton
+} from '../../styles/Navabar.Style';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ProfileAdmin from "../../app/assets/img-2.jpg"
 import {
+  faBell,
   faEdit,
   faEye,
   faPlus,
   faPlusCircle,
+  faRightToBracket,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -54,16 +77,19 @@ import Link from "next/link";
 import CreerHotel from "../../app/creerHotels/CreerHotel";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/navigation";
+
 
 const Hotel = () => {
   const [hotels, setHotels] = useState([]);
   const [nombre, setNombre] = useState(0);
-  const [seeButtons, setSeeButtons] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [text, setText] = useState('Créer un nouvel hôtel');
+  const [currentHotelIndex, setCurrentHotelIndex] = useState(0);
+  const [searchHotel, setSearchHotel] = useState('');
+  const [modalDetails, setModalDetail] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [text, setText] = useState('Créer un nouvel hôtel'); // Nouvel état pour le texte du bouton
-  const [currentHotelIndex, setCurrentHotelIndex] = useState(0); // État pour suivre l'index actuel de l'hôtel
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [seeButtons, setSeeButtons] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -82,7 +108,7 @@ const Hotel = () => {
 
   const handleSeeButton = (index, hotel) => {
     setSelectedHotel(hotel);
-    setCurrentHotelIndex(index); // Définir l'index de l'hôtel actuel
+    setCurrentHotelIndex(index);
     setSeeButtons(index === seeButtons ? null : index);
   };
 
@@ -99,7 +125,6 @@ const Hotel = () => {
 
   const handleCreateButtonClick = () => {
     setShowCreateForm(!showCreateForm);
-    setText(showCreateForm ? 'Créer un nouvel hôtel' : 'Fermer la modal');
   };
 
   const prevHotel = () => {
@@ -118,113 +143,165 @@ const Hotel = () => {
     }
   };
 
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    router.push("/");
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchHotel(event.target.value);
+  };
+
+  const filteredHotels = hotels.filter((hotel) => 
+    hotel.nameHotel.toLowerCase().includes(searchHotel.toLowerCase()) ||
+    hotel.address.toLowerCase().includes(searchHotel.toLowerCase())
+  );
+
   return (
-    <HotelSection>
-      <Navbar2Container>
-        <Header2Container>
-          <Hidden2Container>
-            <Flex2ColumnContainer>
-              <Header2Title>
-                <Header1Subtitle>Hotel</Header1Subtitle>
-                <Header2Subtitle>{nombre}</Header2Subtitle>
-              </Header2Title>
-              <Header3Title>
-                <Header1Subtitle>
-                  <ButtonModal onClick={handleCreateButtonClick}>
-                    <HeaderButtonPlus>
-                      <StyleIconCreer>
-                        <FontAwesomeIcon icon={faPlus} size="1x" color="black" />
-                      </StyleIconCreer>
-                      <StyleSpanCreer>{text}</StyleSpanCreer>
-                    </HeaderButtonPlus>
-                  </ButtonModal>
-                </Header1Subtitle>
-              </Header3Title>
-            </Flex2ColumnContainer>
-          </Hidden2Container>
-        </Header2Container>
-      </Navbar2Container>
+    <>
+      <NavbarContainer>
+        <NavbarNav>
+          <DivNv1>
+            <DivNav2>
+              <TitleContainer>
+                <FlexContainer>
+                  <Title aria-current="page">Dashboard</Title>
+                </FlexContainer>
+              </TitleContainer>
+              <Toolbar>
+                <SearchContainer>
+                  <SearchInput type="text" placeholder="🔎 rechercher" onChange={handleSearchChange}/>
+                </SearchContainer>
+                <BellIcon>
+                  <Link href="/notification">
+                    <FontAwesomeIcon icon={faBell} color="black" />
+                  </Link>
+                </BellIcon>
+                <ProfileImage>
+                  <ProfileAdminImage src={ProfileAdmin} alt='Profile Admin' width={40} height={40} />
+                </ProfileImage>
+                <LogoutIcon>
+                  <IconButton onClick={handleSignOut}>
+                    <FontAwesomeIcon icon={faRightToBracket} color="black"/>
+                  </IconButton>
+                </LogoutIcon>
+              </Toolbar>
+            </DivNav2>
+          </DivNv1>
+        </NavbarNav>
+      </NavbarContainer>
 
-      {showModal && selectedHotel && (
-        <ModalDetails className="animate__animated animate__bounce animate__backInDown">
-          <ModalMere>
-            <ModalTitle>{selectedHotel.nameHotel}</ModalTitle>
-            <LeftRight>
-              <div className="left">
-                <ModalText>Adresse: 
-                  <ModalTextSpan>{selectedHotel.address}</ModalTextSpan>
-                </ModalText>
-                <ModalText>Email: 
-                  <ModalTextSpan>{selectedHotel.email}</ModalTextSpan>
-                </ModalText>
-                <ModalText>Numéro de téléphone: 
-                  <ModalTextSpan>{selectedHotel.number}</ModalTextSpan>
-                </ModalText>
-                <ModalText>Prix par nuit: 
-                  <ModalTextSpan>{selectedHotel.price} {selectedHotel.devise}</ModalTextSpan>
-                </ModalText>
-              </div>
-              <div className="right">
-                <img src={selectedHotel.image} alt={selectedHotel.filename} width={300} height={200}/>
-              </div>
-            </LeftRight>
-          </ModalMere>
-          <ModalBtnClose onClick={() => setShowModal(false)}>Fermer</ModalBtnClose>
-          <ModalBtnEdit>
-            <Link href={`/Edit?id=${selectedHotel._id}`}>Modifier</Link>
-          </ModalBtnEdit>
-          <BtnPrevNext>
-            <BtnPrev onClick={prevHotel}>Précédent</BtnPrev>
-            <BtnNext onClick={nextHotel}>Suivant</BtnNext>
-          </BtnPrevNext>
-        </ModalDetails>
-      )}
+      <HotelSection>
+        <Navbar2Container>
+          <Header2Container>
+            <Hidden2Container>
+              <Flex2ColumnContainer>
+                <Header2Title>
+                  <Header1Subtitle>Hotel</Header1Subtitle>
+                  <Header2Subtitle>{nombre}</Header2Subtitle>
+                </Header2Title>
+                <Header3Title>
+                  <Header1Subtitle>
+                    <ButtonModal onClick={handleCreateButtonClick}>
+                      <HeaderButtonPlus>
+                        <StyleIconCreer>
+                          <FontAwesomeIcon icon={faPlus} size="1x" color="black" />
+                        </StyleIconCreer>
+                        <StyleSpanCreer>{text}</StyleSpanCreer>
+                      </HeaderButtonPlus>
+                    </ButtonModal>
+                  </Header1Subtitle>
+                </Header3Title>
+              </Flex2ColumnContainer>
+            </Hidden2Container>
+          </Header2Container>
+        </Navbar2Container>
 
-      {!showCreateForm && !showModal && (
-        <SecContent>
-          {hotels.map((hotel, index) => (
-            <SingleDestination key={hotel._id} data-aos="fade-up">
-              <ImageModalMere>
-                <TheBtns>
-                  <TIcons onClick={() => handleSeeButton(index, hotel)}>
-                    <FontAwesomeIcon icon={faPlusCircle} color="black" size="1x" />
-                  </TIcons>
-                  {seeButtons === index && (
-                    <SeeAllButtons className="animate__animated animate__bounce animate__backInDown">
-                      <TIcons onClick={() => handleDelete(hotel._id)}> 
-                        <FontAwesomeIcon icon={faTrash} color="red" />
-                      </TIcons>
-                      <TIcons onClick={() => handleSeeButton(index, hotel)}>
-                        <Link href={`/Edit?id=${hotel._id}`}>
-                          <FontAwesomeIcon icon={faEdit} color="yellow" />
-                        </Link>
-                      </TIcons>
-                      <TIcons onClick={() => setShowModal(true)}>
-                        <FontAwesomeIcon icon={faEye} color="skyblue" />
-                      </TIcons>
-                    </SeeAllButtons>
-                  )}
-                </TheBtns>
+        <MaDiv>
+          <DivAuDessus>
+            {modalDetails && selectedHotel ? (
+              <ModalDetails className="animate__animated animate__bounce animate__backInDown">
+                <ModalMere>
+                  <ModalTitle>{selectedHotel.nameHotel}</ModalTitle>
+                  <LeftRight>
+                    <div className="left">
+                      <ModalText>Adresse: 
+                        <ModalTextSpan>{selectedHotel.address}</ModalTextSpan>
+                      </ModalText>
+                      <ModalText>Email: 
+                        <ModalTextSpan>{selectedHotel.email}</ModalTextSpan>
+                      </ModalText>
+                      <ModalText>Numéro de téléphone: 
+                        <ModalTextSpan>{selectedHotel.number}</ModalTextSpan>
+                      </ModalText>
+                      <ModalText>Prix par nuit: 
+                        <ModalTextSpan>{selectedHotel.price} {selectedHotel.devise}</ModalTextSpan>
+                      </ModalText>
+                    </div>
+                    <div className="right">
+                      <img src={selectedHotel.image} alt={selectedHotel.filename} width={300} height={200}/>
+                    </div>
+                  </LeftRight>
+                </ModalMere>
+                <ModalBtnClose onClick={() => setModalDetail(false)}>Fermer</ModalBtnClose>
+                <ModalBtnEdit>
+                  <Link href={`/Edit?id=${selectedHotel._id}`}>Modifier</Link>
+                </ModalBtnEdit>
+                <BtnPrevNext>
+                  <BtnPrev onClick={prevHotel}>Précédent</BtnPrev>
+                  <BtnNext onClick={nextHotel}>Suivant</BtnNext>
+                </BtnPrevNext>
+              </ModalDetails>
+            ) : (
+              <SecContent>
+                {filteredHotels.map((hotel, index) => (
+                  <SingleDestination key={hotel._id} data-aos="fade-up">
+                    <ImageModalMere>
+                      <TheBtns>
+                        <TIcons onClick={() => handleSeeButton(index, hotel)}>
+                          <FontAwesomeIcon icon={faPlusCircle} color="black" size="1x" />
+                        </TIcons>
+                        {seeButtons === index && (
+                          <SeeAllButtons className="animate__animated animate__bounce animate__backInDown">
+                            <TIcons onClick={() => handleDelete(hotel._id)}> 
+                              <FontAwesomeIcon icon={faTrash} color="red" />
+                            </TIcons>
+                            <TIcons onClick={() => handleSeeButton(index, hotel)}>
+                              <Link href={`/Edit?id=${hotel._id}`}>
+                                <FontAwesomeIcon icon={faEdit} color="yellow" />
+                              </Link>
+                            </TIcons>
+                            <TIcons onClick={() => setModalDetail(true)}>
+                              <FontAwesomeIcon icon={faEye} color="skyblue" />
+                            </TIcons>
+                          </SeeAllButtons>
+                        )}
+                      </TheBtns>
+                      <img src={hotel.image} alt={hotel.filename} width={300} height={200} />
+                    </ImageModalMere>
+                    <CardInfo>
+                      <Continent>
+                        <Address>{hotel.address}</Address>
+                      </Continent>
+                      <DestTitle>{hotel.nameHotel}</DestTitle>
+                      <Price>{hotel.price} {hotel.devise} par nuit</Price>
+                    </CardInfo>
+                  </SingleDestination>
+                ))}
+              </SecContent>
+            )}
+          </DivAuDessus>
 
-                <img src={hotel.image} alt={hotel.filename} width={300} height={200} />
-              </ImageModalMere>
-              <CardInfo>
-                <Continent>
-                  <Address>{hotel.address}</Address>
-                </Continent>
-                <DestTitle>{hotel.nameHotel}</DestTitle>
-                <Price>{hotel.price} {hotel.devise} par nuit</Price>
-              </CardInfo>
-            </SingleDestination>
-          ))}
-        </SecContent>
-      )}
-
-      {showCreateForm && <CreerHotel />} {/* Afficher le formulaire de création d'hôtel */}
-      
-      <ToastContainer />
-    </HotelSection>
+          <DivEnDessous>
+            {showCreateForm && <CreerHotel />}  
+          </DivEnDessous>
+        </MaDiv>
+        <ToastContainer />
+      </HotelSection>
+    </>
   );
 };
 
 export default Hotel;
+

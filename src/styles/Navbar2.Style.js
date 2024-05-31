@@ -212,7 +212,7 @@ export const Flex2ColumnContainer = styled.div`
 
   @media (min-width: 320px) {
     display: flex;
-    // flex-direction: column;
+    flex-direction: column;
   }
   @media (min-width: 768px) {
     display: flex;
