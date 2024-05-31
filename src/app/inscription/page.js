@@ -66,7 +66,7 @@ const Inscription = () => {
 
       const data = await res.json();
 
-      if (res.status === 201) {
+      if (res.ok) {
         setValues({
           fullName: "",
           email: "",
@@ -78,11 +78,11 @@ const Inscription = () => {
         
         router.push("/");
         toast.success('Registration successful!');
-      } else if (res.status === 400) {
-        toast.error(data.message || "Email already in use.");
+
       } else {
         console.log("User registration failed.");
         toast.error(data.message || "Registration failed. Please try again.");
+
       }
     } catch (error) {
       console.error("An error occurred:", error);
