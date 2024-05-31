@@ -75,7 +75,7 @@ const Sidebar = () => {
 
                         <SignOut onClick={handleSignOut}>
                             <IconButton>
-                                <FontAwesomeIcon icon={faRightToBracketsid} color="white" size='2x'/>
+                                <FontAwesomeIcon icon={faRightToBracket} color="white" size='2x'/>
                             </IconButton>
                         </SignOut>
 
