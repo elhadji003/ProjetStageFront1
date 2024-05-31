@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useState } from "react";
 import 'animate.css';
 import {
@@ -23,6 +25,7 @@ import {
   BtnPrev,
   BtnNext,
   BtnPrevNext,
+  LeftRight,
 } from "../../styles/Hotel.Style";
 import { 
   Navbar2Container, 
@@ -144,7 +147,7 @@ const Hotel = () => {
         <ModalDetails className="animate__animated animate__bounce animate__backInDown">
           <ModalMere>
             <ModalTitle>{selectedHotel.nameHotel}</ModalTitle>
-            <div className="princ d-flex align-items-center justify-content-around">
+            <LeftRight>
               <div className="left">
                 <ModalText>Adresse: 
                   <ModalTextSpan>{selectedHotel.address}</ModalTextSpan>
@@ -162,7 +165,7 @@ const Hotel = () => {
               <div className="right">
                 <img src={selectedHotel.image} alt={selectedHotel.filename} width={300} height={200}/>
               </div>
-            </div>
+            </LeftRight>
           </ModalMere>
           <ModalBtnClose onClick={() => setShowModal(false)}>Fermer</ModalBtnClose>
           <ModalBtnEdit>
@@ -182,7 +185,7 @@ const Hotel = () => {
               <ImageModalMere>
                 <TheBtns>
                   <TIcons onClick={() => handleSeeButton(index, hotel)}>
-                    <FontAwesomeIcon icon={faPlusCircle} color="white" />
+                    <FontAwesomeIcon icon={faPlusCircle} color="black" size="1x"/>
                   </TIcons>
                   {seeButtons === index && (
                     <SeeAllButtons className="animate__animated animate__bounce animate__backInDown">

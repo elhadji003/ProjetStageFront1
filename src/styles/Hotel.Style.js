@@ -151,6 +151,7 @@ export const SeeAllButtons = styled.div`
   background: #333;
   border-radius: 0.5rem;
   padding: 0.5rem;
+  gap: 1rem;
   // transition: .4s;
 `
 
@@ -163,7 +164,7 @@ export const ModalDetails = styled.div`
   max-width: 40rem;
   background: white;
   margin: 0 auto;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;  
 `
 
@@ -261,7 +262,23 @@ export const BtnPrevNext = styled.div`
   display: flex;
   gap: 1rem;
   justify-content: end;
-  padding: 1rem;
+  padding: 0.3rem;
   
 `
 
+export const LeftRight = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  @media screen and (min-width: 320px) {
+    flex-direction: column;
+  }
+  @media screen and (min-width:  768px) {
+    flex-direction: row;
+  }
+  @media screen and (min-width: 1024px) {
+    flex-direction: row;
+  }
+
+`
