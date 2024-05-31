@@ -51,13 +51,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Link from "next/link";
-import CreerHotel from "../../app/creerHotels/CreerHotel"
+import CreerHotel from "../../app/creerHotels/CreerHotel";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Hotel = () => {
   const [hotels, setHotels] = useState([]);
   const [nombre, setNombre] = useState(0);
   const [seeButtons, setSeeButtons] = useState(null);
-  const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -75,7 +76,7 @@ const Hotel = () => {
       setNombre(response.data.length);
     } catch (error) {
       console.error('Erreur lors de la récupération des données:', error);
-      setError('Erreur lors de la récupération des données.');
+      toast.error('Erreur lors de la récupération des données.');
     }
   };
 
@@ -89,9 +90,10 @@ const Hotel = () => {
     try {
       await axios.delete(`https://projetstage1backend.onrender.com/api/hotels/${id}`);
       setHotels(hotels.filter(hotel => hotel._id !== id));
+      toast.success('Hôtel supprimé avec succès.');
     } catch (error) {
-      setError('Erreur lors de la suppression de l\'hôtel.');
       console.error('Delete error:', error);
+      toast.error('Erreur lors de la suppression de l\'hôtel.');
     }
   };
 
@@ -172,8 +174,8 @@ const Hotel = () => {
             <Link href={`/Edit?id=${selectedHotel._id}`}>Modifier</Link>
           </ModalBtnEdit>
           <BtnPrevNext>
-          <BtnPrev onClick={prevHotel}>Précédent</BtnPrev>
-          <BtnNext onClick={nextHotel}>Suivant</BtnNext>
+            <BtnPrev onClick={prevHotel}>Précédent</BtnPrev>
+            <BtnNext onClick={nextHotel}>Suivant</BtnNext>
           </BtnPrevNext>
         </ModalDetails>
       )}
@@ -185,7 +187,7 @@ const Hotel = () => {
               <ImageModalMere>
                 <TheBtns>
                   <TIcons onClick={() => handleSeeButton(index, hotel)}>
-                    <FontAwesomeIcon icon={faPlusCircle} color="black" size="1x"/>
+                    <FontAwesomeIcon icon={faPlusCircle} color="black" size="1x" />
                   </TIcons>
                   {seeButtons === index && (
                     <SeeAllButtons className="animate__animated animate__bounce animate__backInDown">
@@ -219,7 +221,8 @@ const Hotel = () => {
       )}
 
       {showCreateForm && <CreerHotel />} {/* Afficher le formulaire de création d'hôtel */}
-
+      
+      <ToastContainer />
     </HotelSection>
   );
 };

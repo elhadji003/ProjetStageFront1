@@ -6,6 +6,8 @@ import iconRed from "../assets/icon.png";
 import Image from "next/image";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   StyledCheckboxContainer,
   StyledCheckboxInput,
@@ -61,8 +63,10 @@ const Connexion = () => {
       }
 
       router.replace("/dashboard"); // Rediriger vers le tableau de bord après une connexion réussie
+      toast.success('connexion réussie');
+
     } catch (error) {
-      setError("Invalid credentials");
+      toast.error('Invalid credentials');
       setTimeout(resetMessage, 5000);
     }
   };
@@ -119,6 +123,8 @@ const Connexion = () => {
           Vous n'avez pas de compte?{" "}
           <Link href="/inscription">Inscription</Link>
         </StyledSignupLien>
+        
+        <ToastContainer />
       </StyledContainer>
     </>
   );

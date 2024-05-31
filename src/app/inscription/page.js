@@ -5,8 +5,9 @@ import iconRed from "../assets/icon.png";
 import Link from "next/link";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
-  ErrorMessage,
   Form,
   StyledButton,
   StyledCheckboxContainer,
@@ -22,7 +23,6 @@ import {
   StyledLogoContainer,
   StyledSignupLien,
   StyledText,
-  SuccessMessage,
 } from "../../styles/Connexion.Style"; // Assurez-vous que ces composants existent
 
 const Inscription = () => {
@@ -33,8 +33,6 @@ const Inscription = () => {
     checkbox: false,
   });
 
-  const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -45,18 +43,11 @@ const Inscription = () => {
     });
   };
 
-  const resetMessage = () => {
-    setMessage("");
-    setIsError(false);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!values.fullName || !values.email || !values.password || !values.checkbox) {
-      setIsError(true);
-      setMessage("All fields are necessary and terms must be accepted!");
-      setTimeout(resetMessage, 5000);
+      toast.error('All fields are necessary and terms must be accepted!');
       return;
     }
 
@@ -75,7 +66,7 @@ const Inscription = () => {
 
       const data = await res.json();
 
-      if (res.ok) {
+      if (res.status === 201) {
         setValues({
           fullName: "",
           email: "",
@@ -84,23 +75,18 @@ const Inscription = () => {
         });
 
         e.target.reset();
-        setIsError(false);
-        setMessage("Registration successful!");
-        setTimeout(resetMessage, 5000);
-
+        
         router.push("/");
-
+        toast.success('Registration successful!');
+      } else if (res.status === 400) {
+        toast.error(data.message || "Email already in use.");
       } else {
         console.log("User registration failed.");
-        setIsError(true);
-        setMessage(data.message || "Registration failed. Please try again.");
-        setTimeout(resetMessage, 5000);
+        toast.error(data.message || "Registration failed. Please try again.");
       }
     } catch (error) {
       console.error("An error occurred:", error);
-      setIsError(true);
-      setMessage("An error occurred. Please try again.");
-      setTimeout(resetMessage, 5000);
+      toast.error('An error occurred. Please try again.');
     }
   };
 
@@ -127,7 +113,6 @@ const Inscription = () => {
             <StyledFrmLabel htmlFor="password">Mot de passe</StyledFrmLabel>
             <StyledInput id="password" name="password" type="password" value={values.password} onChange={handleChange} />
           </StyledFrmInput>
-          {message && (isError ? <ErrorMessage>{message}</ErrorMessage> : <SuccessMessage>{message}</SuccessMessage>)}
           <StyledCheckboxContainer>
             <StyledCheckboxInput id="checkbox" name="checkbox" type="checkbox" checked={values.checkbox} onChange={handleChange} />
             <StyledCheckboxText>Accepter les termes et la politique</StyledCheckboxText>
@@ -138,6 +123,8 @@ const Inscription = () => {
       <StyledSignupLien>
         Vous avez déjà un compte? <Link href="/">Se connecter</Link>
       </StyledSignupLien>
+      
+      <ToastContainer/>
     </StyledContainer>
   );
 };

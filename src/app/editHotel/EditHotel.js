@@ -19,20 +19,15 @@ import {
   Form,
   StyledFrInput,
   StyledSubmitCreer,
-  Footer,
 } from '../../styles/Creer.Style';
 import { ButtonModal } from '../../styles/Navbar2.Style';
-import { ErrorMessage, SuccessMessage } from '../../styles/Connexion.Style';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditHotelComponent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hotelId = searchParams.get('id');
-
-  const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false);
-  const [timeoutId, setTimeoutId] = useState(null);
-  const [hotels, setHotels] = useState([]);
 
   const [formData, setFormData] = useState({
     nameHotel: '',
@@ -68,19 +63,7 @@ const EditHotelComponent = () => {
       });
     } catch (error) {
       console.error('Erreur lors de la récupération des données:', error);
-      setIsError(true);
-      setMessage("Une erreur s'est produite lors de la récupération des données");
-      const id = setTimeout(resetMessage, 5000);
-      setTimeoutId(id);
-    }
-  };
-
-  const resetMessage = () => {
-    setMessage("");
-    setIsError(false);
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      setTimeoutId(null);
+      toast.error("Une erreur s'est produite lors de la récupération des données");
     }
   };
 
@@ -94,10 +77,7 @@ const EditHotelComponent = () => {
       !formData.number ||
       !formData.price
     ) {
-      setIsError(true);
-      setMessage('Les champs ne doivent pas être vides.');
-      const id = setTimeout(resetMessage, 5000);
-      setTimeoutId(id);
+      toast.error('Les champs ne doivent pas être vides.');
       return;
     }
 
@@ -113,25 +93,16 @@ const EditHotelComponent = () => {
       const result = await res.json();
 
       if (res.ok) {
-        setIsError(false);
-        setMessage("Hotel updated successfully!");
         console.log('Update successful:', result);
-        const id = setTimeout(resetMessage, 5000);
-        setTimeoutId(id);
         router.push('/cardHotel');
+        toast.success("Hotel updated successfully!");
       } else {
-        setIsError(true);
-        setMessage(result.message || "Update failed. Please try again.");
+        toast.error(result.message || "Update failed. Please try again.");
         console.log('Update failed:', result);
-        const id = setTimeout(resetMessage, 5000);
-        setTimeoutId(id);
       }
     } catch (error) {
       console.error("Error updating form:", error);
-      setIsError(true);
-      setMessage("An error occurred. Please try again.");
-      const id = setTimeout(resetMessage, 5000);
-      setTimeoutId(id);
+      toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -213,8 +184,8 @@ const EditHotelComponent = () => {
             <StyledSubmitCreer type="submit">Mettre à jour</StyledSubmitCreer>
           </FlexEnd>
         </Form>
-        {message && (isError ? <ErrorMessage>{message}</ErrorMessage> : <SuccessMessage>{message}</SuccessMessage>)}
       </Card>
+      <ToastContainer />
     </Container>
   );
 };
