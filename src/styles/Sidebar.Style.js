@@ -191,7 +191,7 @@ export const ProfileBasMere = styled.div`
     top: 0px;
   }
   @media (min-width: 1280px) {
-    top: 240px;
+    top: 200px;
   }
 `
 
