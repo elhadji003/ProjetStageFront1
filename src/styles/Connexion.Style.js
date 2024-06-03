@@ -183,3 +183,16 @@ export const SuccessMessage = styled.div`
   color: #037430;
 
 `
+
+export const IconDiv = styled.div`
+  position: relative;
+  top: -0.5rem;
+`
+
+export const IconDivBtn = styled.button`
+  background: none;
+  border: none;
+  position: relative;
+  left: -2rem;
+  top: -0.5rem;
+`

@@ -23,7 +23,7 @@ import {
   StyledLogoContainer,
   StyledSignupLien,
   StyledText,
-} from "../../styles/Connexion.Style"; // Assurez-vous que ces composants existent
+} from "../../styles/Connexion.Style"; // Ensure these components exist
 
 const Inscription = () => {
   const [values, setValues] = useState({
@@ -80,9 +80,12 @@ const Inscription = () => {
         toast.success('Registration successful!');
 
       } else {
-        console.log("User registration failed.");
-        toast.error(data.message || "Registration failed. Please try again.");
-
+        // Check if the email already exists
+        if (data.message === "Email already in use.") {
+          toast.error('This email is already registered.');
+        } else {
+          toast.error(data.message || "Registration failed. Please try again.");
+        }
       }
     } catch (error) {
       console.error("An error occurred:", error);

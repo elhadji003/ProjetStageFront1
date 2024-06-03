@@ -10,12 +10,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ProfileAdmin from "../../app/assets/pro.png"
 import { IconButton, ProfileAdminImage, ProfileImage } from '../../styles/Navabar.Style';
 import { useRouter } from 'next/navigation';
+import { useUser } from '../../app/userContext'; // Adjust the path as necessary
 
 const Sidebar = () => {
     const [isSidebarActive, setSidebarActive] = useState(false);
     const [chevron, setChevron] = useState(false);
     const router = useRouter();
-
+    const user = useUser();
 
     const toggleSidebar = () => {
         setSidebarActive(!isSidebarActive);
@@ -68,7 +69,7 @@ const Sidebar = () => {
                                 <ProfileAdminImage src={ProfileAdmin} alt='Profile Admin' width={40} height={40} />
                             </ProfileImage>
                             <ProfileTextBas>
-                                <ProfileName>Mouhamed Badiane</ProfileName>
+                                <ProfileName>{user ? user.fullName : 'Loading...'}</ProfileName>
                                 <OnligneFlex><Onligne></Onligne> en ligne</OnligneFlex>
                             </ProfileTextBas>
                         </ProfileBas>
