@@ -302,7 +302,7 @@ z-index: 1000; /* Assurez-vous qu'il apparaît au-dessus du contenu */
 
 @media screen and (min-width: 320px){
   width: 96%;
-  padding: 2rem;
+  padding: 0rem;
 }
 @media screen and (min-width: 768px){
   width: 82%;
