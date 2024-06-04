@@ -294,9 +294,31 @@ export const DivEnDessous = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
-margin-top: -30rem;
+position: absolute;
+width: 82%;
+// margin-top: -30rem;
 background-color: rgba(0, 0, 0, 0.5); /* Optionnel : pour un fond semi-transparent */
 z-index: 1000; /* Assurez-vous qu'il apparaît au-dessus du contenu */
+
+@media screen and (min-width: 320px){
+  width: 96%;
+  padding: 2rem;
+}
+@media screen and (min-width: 768px){
+  width: 82%;
+  padding: 0rem;
+
+}
+@media screen and (min-width: 1024px){
+  width: 82%;
+  padding: 0rem;
+
+}
+@media screen and (min-width: 1440px){
+  width: 82%;
+  padding: 0rem;
+
+}
 
   
   

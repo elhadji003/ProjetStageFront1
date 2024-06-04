@@ -91,8 +91,8 @@ export const BellIcon = styled.div`
 `;
 
 export const ProfileImage = styled.div`
-  width: 2.5rem; /* Correspond à h-10 */
-  height: 2.5rem; /* Correspond à w-10 */
+  width: 2.5rem;
+  height: 2.5rem; 
   border-radius: 50%;
   overflow: hidden;
 
