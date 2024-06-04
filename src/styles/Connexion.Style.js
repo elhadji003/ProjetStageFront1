@@ -196,3 +196,9 @@ export const IconDivBtn = styled.button`
   left: -2rem;
   top: -0.5rem;
 `
+
+export const PwdDiv = styled.div`
+  display: flex;
+  align-items: center;
+  width: 105%;
+`
