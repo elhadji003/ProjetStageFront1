@@ -69,7 +69,7 @@ const Connexion = () => {
         throw new Error("Invalid credentials");
       }
 
-      router.replace("/dashboard"); // Redirect to the dashboard after successful login
+      router.replace("/dashboard");
       toast.success('Connexion réussie');
 
     } catch (error) {
