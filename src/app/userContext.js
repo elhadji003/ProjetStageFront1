@@ -1,31 +1,41 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
+// Création du contexte utilisateur
 const UserContext = createContext();
 
-export const useUser = () => useContext(UserContext);
-
+// Fournisseur de données utilisateur
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  // Récupération des informations de l'utilisateur à partir du localStorage lors de l'initialisation
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get('https://projetstage1backend.onrender.com/api/auth/login'); // Adjust the URL as needed
-        setUser(response.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
   }, []);
 
+  // Fonction pour sauvegarder les données utilisateur
+  const saveUser = (userData) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  // Fonction pour effacer les données utilisateur
+  const clearUser = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+
+  // Rendu des enfants avec le contexte utilisateur fourni
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={{ user }}>
       {children}
     </UserContext.Provider>
   );
 };
+
+// Hook personnalisé pour utiliser le contexte utilisateur
+export const useUser = () => useContext(UserContext);
