@@ -30,8 +30,7 @@ import {
   ErrorMessage,
   ShowHideButton,
   IconDiv,
-  IconDivBtn,
-  PwdDiv
+  IconDivBtn
 } from "../../styles/Connexion.Style";
 
 const Connexion = () => {
@@ -57,7 +56,7 @@ const Connexion = () => {
     const { email, password } = values;
 
     try {
-      const response = await fetch("https://localhost:8000/api/auth/login", {
+      const response = await fetch("https://projetstage1backend.onrender.com/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -106,7 +105,7 @@ const Connexion = () => {
             </StyledFrmInput>
             <StyledFrmInput>
               <StyledFrmLabel htmlFor="password">Mot de passe</StyledFrmLabel>
-              <PwdDiv>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <StyledInput
                   id="password"
                   name="password"
@@ -117,7 +116,7 @@ const Connexion = () => {
                 <IconDivBtn type="button" onClick={toggleShowPassword}>
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </IconDivBtn>
-              </PwdDiv>
+              </div>
             </StyledFrmInput>
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <StyledCheckboxContainer>
