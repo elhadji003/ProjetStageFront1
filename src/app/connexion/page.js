@@ -30,7 +30,8 @@ import {
   ErrorMessage,
   ShowHideButton,
   IconDiv,
-  IconDivBtn
+  IconDivBtn,
+  PwdDiv
 } from "../../styles/Connexion.Style";
 
 const Connexion = () => {
@@ -105,7 +106,7 @@ const Connexion = () => {
             </StyledFrmInput>
             <StyledFrmInput>
               <StyledFrmLabel htmlFor="password">Mot de passe</StyledFrmLabel>
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <PwdDiv>
                 <StyledInput
                   id="password"
                   name="password"
@@ -116,7 +117,7 @@ const Connexion = () => {
                 <IconDivBtn type="button" onClick={toggleShowPassword}>
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </IconDivBtn>
-              </div>
+              </PwdDiv>
             </StyledFrmInput>
             {error && <ErrorMessage>{error}</ErrorMessage>}
             <StyledCheckboxContainer>
