@@ -71,12 +71,12 @@ const Sidebar = () => {
                                     <ProfileImage>
                                         <ProfileAdminImage src={ProfileAdmin} alt='Profile Admin' width={40} height={40} />
                                     </ProfileImage>
-                                    {/* <ProfileTextBas>{user ?
+                                    <ProfileTextBas>{user ?
                                         (<ProfileName> {user.user.name}<OnligneFlex><Onligne></Onligne> en ligne</OnligneFlex></ProfileName>)
                                                     :
                                         (<ProfileName><OnligneFlex><Offligne></Offligne> off line</OnligneFlex></ProfileName>)
                                         }
-                                     </ProfileTextBas> */}
+                                     </ProfileTextBas>
 
 
                                 </ProfileBas>
