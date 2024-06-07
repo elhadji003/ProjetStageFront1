@@ -27,7 +27,8 @@ const Sidebar = () => {
         router.push('/');
     };
 
-    console.log("Name:", user ? user.name : "User not loaded yet"); // Log pour vérifier le nom de l'utilisateur
+
+    console.log("name:", user);
 
     return (
         <SidebarContainer>
@@ -70,12 +71,12 @@ const Sidebar = () => {
                                     <ProfileImage>
                                         <ProfileAdminImage src={ProfileAdmin} alt='Profile Admin' width={40} height={40} />
                                     </ProfileImage>
-                                    <ProfileTextBas>{user ?
+                                    {/* <ProfileTextBas>{user ?
                                         (<ProfileName> {user.user.name}<OnligneFlex><Onligne></Onligne> en ligne</OnligneFlex></ProfileName>)
                                                     :
                                         (<ProfileName><OnligneFlex><Offligne></Offligne> off line</OnligneFlex></ProfileName>)
                                         }
-                                     </ProfileTextBas>
+                                     </ProfileTextBas> */}
 
 
                                 </ProfileBas>
