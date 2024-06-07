@@ -5,7 +5,13 @@ import { faChevronLeft, faChevronRight, faHome, faRightToBracket } from '@fortaw
 import Link from 'next/link';
 import Image from 'next/image';
 import iconRed from "../../app/assets/icon.png";
-import { Div1, Div2, Div3, Div4, List, ListLi, Offligne, Onligne, OnligneFlex, ProfileBas, ProfileBasMere, ProfileName, ProfileTextBas, RedProductTitle, SidebarContainer, SidebarContainer2, SidebarHeader, SidebarList, SignOut, StyledSidebarNav, ToggleButton, ToggleWrapper } from '../../styles/Sidebar.Style';
+import { 
+    Div1, Div2, Div3, Div4, List, ListLi, Offligne, Onligne, 
+    OnligneFlex, ProfileBas, ProfileBasMere, ProfileName, 
+    ProfileTextBas, RedProductTitle, SidebarContainer, 
+    SidebarContainer2, SidebarHeader, SidebarList, SignOut, 
+    StyledSidebarNav, ToggleButton, ToggleWrapper 
+} from '../../styles/Sidebar.Style';
 import "bootstrap/dist/css/bootstrap.min.css";
 import ProfileAdmin from "../../app/assets/pro.png";
 import { IconButton, ProfileAdminImage, ProfileImage } from '../../styles/Navabar.Style';
@@ -24,11 +30,11 @@ const Sidebar = () => {
     };
 
     const handleSignOut = async () => {
+        // Add your sign-out logic here
         router.push('/');
     };
 
-
-    console.log("name:", user);
+    console.log("User context:", user);
 
     return (
         <SidebarContainer>
@@ -40,8 +46,10 @@ const Sidebar = () => {
                             <RedProductTitle>Red Product</RedProductTitle>
                             <ToggleWrapper>
                                 <ToggleButton onClick={toggleSidebar}>
-                                    {chevron ? <FontAwesomeIcon icon={faChevronLeft} size="2x" color='white' style={{ right: '1rem' }} /> :
-                                        <FontAwesomeIcon icon={faChevronRight} size="2x" color='black' style={{ marginLeft: '1rem' }} />}
+                                    {chevron ? 
+                                        <FontAwesomeIcon icon={faChevronLeft} size="2x" color='white' style={{ right: '1rem' }} /> :
+                                        <FontAwesomeIcon icon={faChevronRight} size="2x" color='black' style={{ marginLeft: '1rem' }} />
+                                    }
                                 </ToggleButton>
                             </ToggleWrapper>
                         </Div2>
@@ -71,14 +79,22 @@ const Sidebar = () => {
                                     <ProfileImage>
                                         <ProfileAdminImage src={ProfileAdmin} alt='Profile Admin' width={40} height={40} />
                                     </ProfileImage>
-                                    <ProfileTextBas>{user ?
-                                        (<ProfileName> {user.user.name}<OnligneFlex><Onligne></Onligne> en ligne</OnligneFlex></ProfileName>)
-                                                    :
-                                        (<ProfileName><OnligneFlex><Offligne></Offligne> off line</OnligneFlex></ProfileName>)
-                                        }
-                                     </ProfileTextBas>
-
-
+                                    <ProfileTextBas>
+                                        {user ? (
+                                            <ProfileName>
+                                                {user.user.name}
+                                                <OnligneFlex>
+                                                    <Onligne></Onligne> en ligne
+                                                </OnligneFlex>
+                                            </ProfileName>
+                                        ) : (
+                                            <ProfileName>
+                                                <OnligneFlex>
+                                                    <Offligne></Offligne> off line
+                                                </OnligneFlex>
+                                            </ProfileName>
+                                        )}
+                                    </ProfileTextBas>
                                 </ProfileBas>
 
                                 <SignOut onClick={handleSignOut}>
@@ -86,15 +102,13 @@ const Sidebar = () => {
                                         <FontAwesomeIcon icon={faRightToBracket} color="white" size='2x' />
                                     </IconButton>
                                 </SignOut>
-
                             </ProfileBasMere>
-
                         </SidebarList>
                     </SidebarContainer2>
                 </StyledSidebarNav>
             </SidebarHeader>
         </SidebarContainer>
-    )
-}
+    );
+};
 
 export default Sidebar;
