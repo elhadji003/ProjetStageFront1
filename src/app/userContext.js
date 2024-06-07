@@ -31,7 +31,7 @@ export const UserProvider = ({ children }) => {
 
   // Rendu des enfants avec le contexte utilisateur fourni
   return (
-    <UserContext.Provider value={{ user }}>
+    <UserContext.Provider value={{ user, saveUser, clearUser }}>
       {children}
     </UserContext.Provider>
   );

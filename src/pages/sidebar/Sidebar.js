@@ -71,7 +71,7 @@ const Sidebar = () => {
                                         <ProfileAdminImage src={ProfileAdmin} alt='Profile Admin' width={40} height={40} />
                                     </ProfileImage>
                                     <ProfileTextBas>
-                                        <ProfileName>{user ? user.name : 'Loading...'}</ProfileName>
+                                        <ProfileName>{user ? user.user.name : 'Loading...'}</ProfileName>
                                         <OnligneFlex><Onligne></Onligne> en ligne</OnligneFlex>
                                     </ProfileTextBas>
                                 </ProfileBas>

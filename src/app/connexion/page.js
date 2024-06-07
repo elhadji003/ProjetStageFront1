@@ -33,6 +33,7 @@ import {
   IconDivBtn,
   PwdDiv
 } from "../../styles/Connexion.Style";
+import { useUser } from "../userContext";
 
 const Connexion = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -42,6 +43,7 @@ const Connexion = () => {
   });
   const [error, setError] = useState("");
   const router = useRouter();
+  const {saveUser} = useUser();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -65,9 +67,13 @@ const Connexion = () => {
         body: JSON.stringify({ email, password }),
       });
 
+      
       if (!response.ok) {
         throw new Error("Invalid credentials");
       }
+
+      const data = await response.json();
+      saveUser(data);
 
       router.replace("/dashboard");
       toast.success('Connexion réussie');
