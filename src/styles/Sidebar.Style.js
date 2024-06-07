@@ -207,6 +207,15 @@ export const Onligne = styled.div`
   flex: non-wrap;
 
 `
+export const Offligne = styled.div`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: red;
+  flex: non-wrap;
+
+`
+
 
 export const OnligneFlex = styled.div`
   display: flex;
