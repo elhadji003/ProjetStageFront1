@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faHome, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
@@ -80,7 +80,7 @@ const Sidebar = () => {
                                         <ProfileAdminImage src={ProfileAdmin} alt='Profile Admin' width={40} height={40} />
                                     </ProfileImage>
                                     <ProfileTextBas>
-                                        {user ? (
+                                        {user && user.user ? (
                                             <ProfileName>
                                                 {user.user.name}
                                                 <OnligneFlex>
