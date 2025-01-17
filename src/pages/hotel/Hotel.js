@@ -97,7 +97,7 @@ const Hotel = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/hotels");
+      const response = await axios.get("https://projetstage1backend-1.onrender.com/api/hotels");
       setHotels(response.data);
       setNombre(response.data.length);
     } catch (error) {
@@ -114,7 +114,7 @@ const Hotel = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/hotels/${id}`);
+      await axios.delete(`https://localhost:8000/api/hotels/${id}`);
       setHotels(hotels.filter(hotel => hotel._id !== id));
       toast.success('Hôtel supprimé avec succès.');
     } catch (error) {

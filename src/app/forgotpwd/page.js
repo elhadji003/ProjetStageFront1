@@ -27,7 +27,7 @@ const ForgotPwd = () => {
 
   const handleForgotPassword = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/auth/forgot-password", {
+      const response = await fetch("https://projetstage1backend-1.onrender.com/api/auth/forgot-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

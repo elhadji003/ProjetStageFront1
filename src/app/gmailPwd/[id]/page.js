@@ -6,21 +6,21 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { 
-  Form, 
-  IconDiv, 
-  StyledBackToLoginLien, 
-  StyledButton, 
-  StyledContainer, 
-  StyledFrm, 
-  StyledFrmInput, 
-  StyledFrmLabel, 
-  StyledIcon, 
-  StyledInfo, 
-  StyledInput, 
-  StyledLogoContainer, 
-  StyledText, 
-  StyledTextInfo 
+import {
+  Form,
+  IconDiv,
+  StyledBackToLoginLien,
+  StyledButton,
+  StyledContainer,
+  StyledFrm,
+  StyledFrmInput,
+  StyledFrmLabel,
+  StyledIcon,
+  StyledInfo,
+  StyledInput,
+  StyledLogoContainer,
+  StyledText,
+  StyledTextInfo
 } from "../../../styles/Connexion.Style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -53,9 +53,9 @@ const ResetPassword = () => {
 
     try {
       const token = window.location.pathname.split('/').pop(); // Assumes the token is in the URL
-      const response = await axios.post('http://localhost:8000/api/auth/reset-password', { token, password });
-      
-      if(response.status === 200){
+      const response = await axios.post('https://projetstage1backend-1.onrender.com/api/auth/reset-password', { token, password });
+
+      if (response.status === 200) {
         toast.success(response.data.message);
         setPassword('');
         setConfirmPassword('');
@@ -87,25 +87,25 @@ const ResetPassword = () => {
             <StyledFrmInput>
               <StyledFrmLabel htmlFor="password" className="font-bold" style={{ color: '#45484B' }}>Nouveau mot de passe</StyledFrmLabel>
               <div style={{ position: "relative" }}>
-                <StyledInput 
-                  id="password" 
-                  type={showPassword ? "text" : "password"} 
-                  value={password} 
-                  onChange={(e) => setPassword(e.target.value)} 
-                  required 
+                <StyledInput
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
-                <div 
-                  style={{ 
-                    position: "absolute", 
-                    right: 10, 
-                    top: "50%", 
-                    transform: "translateY(-50%)", 
-                    cursor: "pointer" 
+                <div
+                  style={{
+                    position: "absolute",
+                    right: 10,
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer"
                   }}
                   onClick={togglePasswordVisibility}
                 >
                   <IconDiv>
-                    {showPassword ? <FontAwesomeIcon icon={faEyeSlash}/> : <FontAwesomeIcon icon={faEye}/>}
+                    {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
                   </IconDiv>
                 </div>
               </div>
@@ -113,25 +113,25 @@ const ResetPassword = () => {
             <StyledFrmInput>
               <StyledFrmLabel htmlFor="confirmPassword" className="font-bold" style={{ color: '#45484B' }}>Confirmez le mot de passe</StyledFrmLabel>
               <div style={{ position: "relative" }}>
-                <StyledInput 
-                  id="confirmPassword" 
-                  type={showConfirmPassword ? "text" : "password"} 
-                  value={confirmPassword} 
-                  onChange={(e) => setConfirmPassword(e.target.value)} 
-                  required 
+                <StyledInput
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
                 />
-                <div 
-                  style={{ 
-                    position: "absolute", 
-                    right: 10, 
-                    top: "50%", 
-                    transform: "translateY(-50%)", 
-                    cursor: "pointer" 
+                <div
+                  style={{
+                    position: "absolute",
+                    right: 10,
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer"
                   }}
                   onClick={toggleConfirmPasswordVisibility}
                 >
                   <IconDiv>
-                    {showConfirmPassword ? <FontAwesomeIcon icon={faEyeSlash}/> : <FontAwesomeIcon icon={faEye}/>}
+                    {showConfirmPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
                   </IconDiv>
                 </div>
               </div>

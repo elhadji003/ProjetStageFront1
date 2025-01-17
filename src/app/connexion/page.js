@@ -59,7 +59,7 @@ const Connexion = () => {
     const { email, password } = values;
 
     try {
-      const response = await fetch("http://localhost:8000/api/auth/login", {
+      const response = await fetch("https://projetstage1backend-1.onrender.com/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

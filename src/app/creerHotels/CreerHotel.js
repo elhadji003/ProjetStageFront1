@@ -76,7 +76,7 @@ const CreerHotel = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/hotels",
+        "https://projetstage1backend-1.onrender.com/api/hotels",
         formDataToSend
       );
 

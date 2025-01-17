@@ -68,7 +68,7 @@ const EditHotelComponent = () => {
 
   const fetchHotelData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/hotels/${hotelId}`);
+      const response = await axios.get(`https://localhost:8000/api/hotels/${hotelId}`);
       setFormData({
         nameHotel: response.data.nameHotel,
         address: response.data.address,
@@ -110,7 +110,7 @@ const EditHotelComponent = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/api/hotels/${hotelId}`, {
+      const res = await fetch(`https://projetstage1backend-1.onrender.com/api/hotels/${hotelId}`, {
         method: "PUT",
         body: form,
       });

@@ -52,7 +52,7 @@ const Inscription = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:8000/api/auth/register", {
+      const res = await fetch("https://projetstage1backend-1.onrender.com/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
