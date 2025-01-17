@@ -68,7 +68,7 @@ const EditHotelComponent = () => {
 
   const fetchHotelData = async () => {
     try {
-      const response = await axios.get(`https://projetstage1backend.onrender.com/api/hotels/${hotelId}`);
+      const response = await axios.get(`http://localhost:8000/api/hotels/${hotelId}`);
       setFormData({
         nameHotel: response.data.nameHotel,
         address: response.data.address,
@@ -110,7 +110,7 @@ const EditHotelComponent = () => {
     }
 
     try {
-      const res = await fetch(`https://projetstage1backend.onrender.com/api/hotels/${hotelId}`, {
+      const res = await fetch(`http://localhost:8000/api/hotels/${hotelId}`, {
         method: "PUT",
         body: form,
       });
@@ -228,7 +228,7 @@ const EditHotelComponent = () => {
                 type="file"
                 accept='images/*'
                 onChange={handleFileChange}
-                style={{display: "none"}}
+                style={{ display: "none" }}
               />
             </Dropzone>
           </Footer>

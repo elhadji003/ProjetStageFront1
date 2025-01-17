@@ -43,7 +43,7 @@ const Connexion = () => {
   });
   const [error, setError] = useState("");
   const router = useRouter();
-  const {saveUser} = useUser();
+  const { saveUser } = useUser();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -59,7 +59,7 @@ const Connexion = () => {
     const { email, password } = values;
 
     try {
-      const response = await fetch("https://projetstage1backend.onrender.com/api/auth/login", {
+      const response = await fetch("http://localhost:8000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +67,7 @@ const Connexion = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      
+
       if (!response.ok) {
         throw new Error("Invalid credentials");
       }
@@ -145,7 +145,7 @@ const Connexion = () => {
           Vous n'avez pas de compte?{" "}
           <Link href="/inscription">Inscription</Link>
         </StyledSignupLien>
-        
+
         <ToastContainer />
       </StyledContainer>
     </>

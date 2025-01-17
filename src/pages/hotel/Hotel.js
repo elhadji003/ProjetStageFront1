@@ -30,8 +30,8 @@ import {
   DivAuDessus,
   DivEnDessous,
 } from "../../styles/Hotel.Style";
-import { 
-  Navbar2Container, 
+import {
+  Navbar2Container,
   Header2Title,
   Header2Subtitle,
   Header2Container,
@@ -44,16 +44,16 @@ import {
   StyleIconCreer,
   ButtonModal
 } from '../../styles/Navbar2.Style';
-import { 
-  NavbarContainer, 
-  NavbarNav, 
-  TitleContainer, 
-  Title, 
-  Toolbar, 
-  BellIcon, 
-  ProfileImage, 
-  LogoutIcon, 
-  ProfileAdminImage, 
+import {
+  NavbarContainer,
+  NavbarNav,
+  TitleContainer,
+  Title,
+  Toolbar,
+  BellIcon,
+  ProfileImage,
+  LogoutIcon,
+  ProfileAdminImage,
   DivNv1,
   DivNav2,
   FlexContainer,
@@ -97,7 +97,7 @@ const Hotel = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://projetstage1backend.onrender.com/api/hotels");
+      const response = await axios.get("http://localhost:8000/api/hotels");
       setHotels(response.data);
       setNombre(response.data.length);
     } catch (error) {
@@ -114,7 +114,7 @@ const Hotel = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://projetstage1backend.onrender.com/api/hotels/${id}`);
+      await axios.delete(`http://localhost:8000/api/hotels/${id}`);
       setHotels(hotels.filter(hotel => hotel._id !== id));
       toast.success('Hôtel supprimé avec succès.');
     } catch (error) {
@@ -153,7 +153,7 @@ const Hotel = () => {
     setSearchHotel(event.target.value);
   };
 
-  const filteredHotels = hotels.filter((hotel) => 
+  const filteredHotels = hotels.filter((hotel) =>
     hotel.nameHotel.toLowerCase().includes(searchHotel.toLowerCase()) ||
     hotel.address.toLowerCase().includes(searchHotel.toLowerCase())
   );
@@ -171,7 +171,7 @@ const Hotel = () => {
               </TitleContainer>
               <Toolbar>
                 <SearchContainer>
-                  <SearchInput type="text" placeholder="🔎 rechercher" onChange={handleSearchChange}/>
+                  <SearchInput type="text" placeholder="🔎 rechercher" onChange={handleSearchChange} />
                 </SearchContainer>
                 <BellIcon>
                   <Link href="/notification">
@@ -183,7 +183,7 @@ const Hotel = () => {
                 </ProfileImage>
                 <LogoutIcon>
                   <IconButton onClick={handleSignOut}>
-                    <FontAwesomeIcon icon={faRightToBracket} color="black"/>
+                    <FontAwesomeIcon icon={faRightToBracket} color="black" />
                   </IconButton>
                 </LogoutIcon>
               </Toolbar>
@@ -226,21 +226,21 @@ const Hotel = () => {
                   <ModalTitle>{selectedHotel.nameHotel}</ModalTitle>
                   <LeftRight>
                     <div className="left">
-                      <ModalText>Adresse: 
+                      <ModalText>Adresse:
                         <ModalTextSpan>{selectedHotel.address}</ModalTextSpan>
                       </ModalText>
-                      <ModalText>Email: 
+                      <ModalText>Email:
                         <ModalTextSpan>{selectedHotel.email}</ModalTextSpan>
                       </ModalText>
-                      <ModalText>Numéro de téléphone: 
+                      <ModalText>Numéro de téléphone:
                         <ModalTextSpan>{selectedHotel.number}</ModalTextSpan>
                       </ModalText>
-                      <ModalText>Prix par nuit: 
+                      <ModalText>Prix par nuit:
                         <ModalTextSpan>{selectedHotel.price} {selectedHotel.devise}</ModalTextSpan>
                       </ModalText>
                     </div>
                     <div className="right">
-                      <img src={selectedHotel.image} alt={selectedHotel.filename} width={300} height={200}/>
+                      <img src={selectedHotel.image} alt={selectedHotel.filename} width={300} height={200} />
                     </div>
                   </LeftRight>
                 </ModalMere>
@@ -264,7 +264,7 @@ const Hotel = () => {
                         </TIcons>
                         {seeButtons === index && (
                           <SeeAllButtons className="animate__animated animate__bounce animate__backInDown">
-                            <TIcons onClick={() => handleDelete(hotel._id)}> 
+                            <TIcons onClick={() => handleDelete(hotel._id)}>
                               <FontAwesomeIcon icon={faTrash} color="red" />
                             </TIcons>
                             <TIcons onClick={() => handleSeeButton(index, hotel)}>
@@ -294,7 +294,7 @@ const Hotel = () => {
           </DivAuDessus>
 
           <DivEnDessous>
-            {showCreateForm && <CreerHotel />}  
+            {showCreateForm && <CreerHotel />}
           </DivEnDessous>
         </MaDiv>
         <ToastContainer />

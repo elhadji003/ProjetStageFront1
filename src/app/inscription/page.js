@@ -52,7 +52,7 @@ const Inscription = () => {
     }
 
     try {
-      const res = await fetch("https://projetstage1backend.onrender.com/api/auth/register", {
+      const res = await fetch("http://localhost:8000/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +75,7 @@ const Inscription = () => {
         });
 
         e.target.reset();
-        
+
         router.push("/");
         toast.success('Registration successful!');
 
@@ -126,8 +126,8 @@ const Inscription = () => {
       <StyledSignupLien>
         Vous avez déjà un compte? <Link href="/">Se connecter</Link>
       </StyledSignupLien>
-      
-      <ToastContainer/>
+
+      <ToastContainer />
     </StyledContainer>
   );
 };

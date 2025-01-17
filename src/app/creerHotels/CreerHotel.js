@@ -76,7 +76,7 @@ const CreerHotel = () => {
 
     try {
       const res = await axios.post(
-        "https://projetstage1backend.onrender.com/api/hotels",
+        "http://localhost:8000/api/hotels",
         formDataToSend
       );
 
@@ -117,125 +117,125 @@ const CreerHotel = () => {
   const handleClose = () => {
     setShowModal(false); // Afficher le formulaire de création d'hôtel
   };
-  
+
 
   return (
     <>
       {showModal && <Container className='animate__animated animate__bounce animate__fadeIn'>
-      <Card>
-        <Header>
-          {/* <a href="/cardHotel"> */}
+        <Card>
+          <Header>
+            {/* <a href="/cardHotel"> */}
             <ButtonModal onClick={handleClose}>
               <FontAwesomeIcon icon={faArrowLeft} />
             </ButtonModal>
-          {/* </a> */}
-          <Title>Créer un nouveau hôtel</Title>
-        </Header>
-        <Form onSubmit={handleSubmit}>
-          <Row>
-            <FrGr2oup>
-              <StyledFrInput>
-                <Label htmlFor="hotel-name">Nom de l'hôtel</Label>
-                <Input
-                  id="hotel-name"
-                  type="text"
-                  name="nameHotel"
-                  placeholder="CAP Marniane"
-                  value={formData.nameHotel}
-                  onChange={handleChange}
-                />
-              </StyledFrInput>
-              <StyledFrInput>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </StyledFrInput>
-              <StyledFrInput>
-                <Label htmlFor="price">Prix par nuit</Label>
-                <Input
-                  id="price"
-                  type="text"
-                  name="price"
-                  placeholder="125.000 XOF"
-                  value={formData.price}
-                  onChange={handleChange}
-                />
-              </StyledFrInput>
-            </FrGr2oup>
-            <FrGr2oup>
-              <StyledFrInput>
-                <Label htmlFor="address">Adresse</Label>
-                <Input
-                  id="address"
-                  type="text"
-                  name="address"
-                  placeholder="Les îles de ..."
-                  value={formData.address}
-                  onChange={handleChange}
-                />
-              </StyledFrInput>
-              <StyledFrInput>
-                <Label htmlFor="phone">Numéro de téléphone</Label>
-                <Input
-                  id="phone"
-                  type="text"
-                  name="number"
-                  placeholder="+221 ..."
-                  value={formData.number}
-                  onChange={handleChange}
-                />
-              </StyledFrInput>
-              <StyledFrInput>
-                <Label htmlFor="currency">Devise</Label>
-                <Select
-                  id="currency"
-                  name="devise"
-                  value={formData.devise}
-                  onChange={handleChange}
-                >
-                  <option value="XOF">F XOF</option>
-                  <option value="Euro">Euro</option>
-                  <option value="Dollar">$</option>
-                </Select>
-              </StyledFrInput>
-            </FrGr2oup>
-          </Row>
-          <Footer>
-            <Label htmlFor="file">Ajouter une photo</Label>
-            <Dropzone htmlFor="dropzone-file">
-              {selectedImage
-                ? <Image
+            {/* </a> */}
+            <Title>Créer un nouveau hôtel</Title>
+          </Header>
+          <Form onSubmit={handleSubmit}>
+            <Row>
+              <FrGr2oup>
+                <StyledFrInput>
+                  <Label htmlFor="hotel-name">Nom de l'hôtel</Label>
+                  <Input
+                    id="hotel-name"
+                    type="text"
+                    name="nameHotel"
+                    placeholder="CAP Marniane"
+                    value={formData.nameHotel}
+                    onChange={handleChange}
+                  />
+                </StyledFrInput>
+                <StyledFrInput>
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </StyledFrInput>
+                <StyledFrInput>
+                  <Label htmlFor="price">Prix par nuit</Label>
+                  <Input
+                    id="price"
+                    type="text"
+                    name="price"
+                    placeholder="125.000 XOF"
+                    value={formData.price}
+                    onChange={handleChange}
+                  />
+                </StyledFrInput>
+              </FrGr2oup>
+              <FrGr2oup>
+                <StyledFrInput>
+                  <Label htmlFor="address">Adresse</Label>
+                  <Input
+                    id="address"
+                    type="text"
+                    name="address"
+                    placeholder="Les îles de ..."
+                    value={formData.address}
+                    onChange={handleChange}
+                  />
+                </StyledFrInput>
+                <StyledFrInput>
+                  <Label htmlFor="phone">Numéro de téléphone</Label>
+                  <Input
+                    id="phone"
+                    type="text"
+                    name="number"
+                    placeholder="+221 ..."
+                    value={formData.number}
+                    onChange={handleChange}
+                  />
+                </StyledFrInput>
+                <StyledFrInput>
+                  <Label htmlFor="currency">Devise</Label>
+                  <Select
+                    id="currency"
+                    name="devise"
+                    value={formData.devise}
+                    onChange={handleChange}
+                  >
+                    <option value="XOF">F XOF</option>
+                    <option value="Euro">Euro</option>
+                    <option value="Dollar">$</option>
+                  </Select>
+                </StyledFrInput>
+              </FrGr2oup>
+            </Row>
+            <Footer>
+              <Label htmlFor="file">Ajouter une photo</Label>
+              <Dropzone htmlFor="dropzone-file">
+                {selectedImage
+                  ? <Image
                     src={URL.createObjectURL(selectedImage)}
                     alt="selected-img"
                     width={300}
                     height={200}
                   />
-                : <DivImage2>
+                  : <DivImage2>
                     <FontAwesomeIcon icon={faImage} size='3x' />
                   </DivImage2>
-              }
-              <Input
-                id="dropzone-file"
-                type="file"
-                accept='images/*'
-                onChange={handleFileChange}
-                style={{display: "none"}}
-              />
-            </Dropzone>
-          </Footer>
-          <FlexEnd>
-            <StyledSubmitCreer type="submit">Enregistrer</StyledSubmitCreer>
-          </FlexEnd>
-        </Form>
-        {message && (isError ? <ErrorMessage>{message}</ErrorMessage> : <SuccessMessage>{message}</SuccessMessage>)}
-      </Card>
-    </Container>}
+                }
+                <Input
+                  id="dropzone-file"
+                  type="file"
+                  accept='images/*'
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+              </Dropzone>
+            </Footer>
+            <FlexEnd>
+              <StyledSubmitCreer type="submit">Enregistrer</StyledSubmitCreer>
+            </FlexEnd>
+          </Form>
+          {message && (isError ? <ErrorMessage>{message}</ErrorMessage> : <SuccessMessage>{message}</SuccessMessage>)}
+        </Card>
+      </Container>}
     </>
   );
 };
